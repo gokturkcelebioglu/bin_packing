@@ -12,7 +12,7 @@ def Algorithm(shapes):
     shapes.sort(key=lambda shape: shape.height, reverse=True)
     # print_shapes(shapes)
     shapes.sort(key=lambda shape: shape.width, reverse=True)
-    print_shapes(shapes)
+    # print_shapes(shapes)
     
     best_result = place_shapes(shapes)
     neighbour_result = None

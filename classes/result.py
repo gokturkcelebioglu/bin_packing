@@ -5,4 +5,4 @@ class Result:
         self.shape_list = shape_list
 
     def print_result(self):
-        print("New neighbour => Number of trays: {self.number_of_trays},  Number of unused pixels: {self.number_of_unused_pixels}")
+        print("New neighbour => Number of trays: {},  Number of unused pixels: {}".format(self.number_of_trays,self.number_of_unused_pixels))

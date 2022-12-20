@@ -1,6 +1,6 @@
 # Tray size
-TRAY_HEIGHT = 45
-TRAY_WIDTH = 25
+TRAY_HEIGHT = 25
+TRAY_WIDTH = 45
 
 # Simulated annealing constants
 INITIAL_TEMPERATURE = 10000000000

@@ -24,6 +24,7 @@ def place_shapes(shapes):
     section_width = 0
 
     while number_of_placed_shapes < len(shapes):
+
         is_section_placeable = False
 
         if new_tray is True:
@@ -36,15 +37,12 @@ def place_shapes(shapes):
             section_width = shapes[shapes_index].width
             new_section = False
 
-        # shape return
         try:
             for tray_y in range(0, TRAY_HEIGHT - shapes[shapes_index].height + 1):
-                for tray_x in range(section_start_position, section_start_position + section_width - shapes[shapes_index].width):
-                    print("3")
-                    print(is_shape_placeable(shapes[shapes_index], tray_x, tray_y, tray))
-                    if is_shape_placeable(shapes[shapes_index], tray_x, tray_y, tray) is True:
-                        print("yyyyy")
+                for tray_x in range(section_start_position, section_start_position + section_width - shapes[shapes_index].width + 1):
+                    if is_shape_placeable(shapes[shapes_index], tray_x, tray_y, tray):
                         place_shape(shapes[shapes_index], tray_x, tray_y, tray)
+                        print_tray(tray)
                         shapes[shapes_index].isPlaced = True
                         number_of_placed_shapes = number_of_placed_shapes + 1
                         print("---> Now number of placed shapes is {}.".format(number_of_placed_shapes))
@@ -61,12 +59,9 @@ def place_shapes(shapes):
             shapes_index = 0
             for shapes_index in range(0, len(shapes)):
                 if shapes[shapes_index].isPlaced is False:
-                    # tray_x = 0
-                    # tray_y = 0
-                    for tray_y in range(0, TRAY_HEIGHT - shapes[shapes_index].height):
+                    for tray_y in range(0, TRAY_HEIGHT - shapes[shapes_index].height + 1):
                         for tray_x in range(section_start_position, section_start_position + section_width - shapes[shapes_index].height):
                             if is_shape_placeable(shapes[shapes_index], tray_x, tray_y, tray):
-                                print("xxxxx")
                                 is_section_placeable = True
                                 raise StopIteration
         except StopIteration:
@@ -76,10 +71,11 @@ def place_shapes(shapes):
             try:
                 new_section = False
                 section_start_position = section_start_position + section_width
-                if shapes[shapes_index].isPlaced is False:
-                    if section_start_position + shapes[shapes_index] <= TRAY_WIDTH:
-                        new_section = True
-                        raise StopIteration
+                for shapes_index in range(0,len(shapes)):
+                    if shapes[shapes_index].isPlaced is False:
+                        if section_start_position + shapes[shapes_index].width + 1 <= TRAY_WIDTH:
+                            new_section = True
+                            raise StopIteration
             except StopIteration:
                 pass
 
@@ -97,17 +93,20 @@ def place_shapes(shapes):
 def is_shape_placeable(shape, tray_x, tray_y, tray):
     for i in range(0, shape.height):
         for j in range(0, shape.width):
-            if tray[tray_x + j][tray_y + i] != 0:
-                print("Shape #{} is not placeable.".format(shape.id))
-                return False
-    print("Shape #{} is placeable.".format(shape.id))
+            try:
+                if tray[tray_x + j][tray_y + i ] != 0:
+                    # print("Shape #{} is not placeable.".format(shape.id))
+                    return False
+            except:
+                print("EXCEPTION: Shape #{} failed in tray_x -> {}, tray_y -> {}, j -> {}, i -> {}".format(shape.id,tray_x,tray_y,j,i))
+    print("Shape #{} is can be placed in ({},{}).".format(shape.id,j,i))
     return True
 
 def place_shape(shape, tray_x, tray_y, tray):
     for i in range(0, shape.height):
         for j in range(0, shape.width):
            tray[tray_x + j][tray_y + i] = shape.id
-    print("---> Shape #{} is placed.".format(shape.id))
+    print("---> Shape #{} is placed in ({},{}).".format(shape.id,j,i))
 
 def unused_pixel_counter(tray):
     counter = 0
@@ -127,8 +126,8 @@ def empty_tray():
     return tray
 
 def print_tray(tray):
-    for y in range(0, len(tray)):
-        for x in range(0, len(tray[0])):
-            print("{: >4}".format(tray[y][x]), end='')
+    for y in range(0, TRAY_HEIGHT):
+        for x in range(0, TRAY_WIDTH):
+            print("{: >4}".format(tray[x][y]), end='')
         print("\n")
     print("\n\n--------------------------------\n")
