@@ -29,8 +29,8 @@ def export_trays(trays, number_of_shapes):
     while export_counter != len(trays):
         for y in range(TRAY_HEIGHT):
             for x in range(TRAY_WIDTH):
-                draw_square(left, top, colors[int(trays[export_counter])])
-                draw_text(left, top, trays[export_counter])
+                draw_square(left, top, colors[int(trays[export_counter][x][y])])
+                draw_text(left, top, trays[export_counter][x][y])
                 pygame.display.update()
                 left += 1
             top += 1
@@ -43,7 +43,7 @@ def export_trays(trays, number_of_shapes):
 
 def color_generator(number_of_shapes):
     colors = []
-    for i in range(0, number_of_shapes):
+    for i in range(0, number_of_shapes + 1):
         random.seed(i*i*i)
         colors.append((random.randrange(0, 255), random.randrange(0, 255), random.randrange(0, 255)))
         colors[0] = (255, 255, 255)

@@ -1,8 +1,9 @@
 class Result:
-    def __init__(self, number_of_trays, number_of_unused_pixels, shape_list):
+    def __init__(self, number_of_trays, number_of_unused_pixels, shape_list, trays):
         self.number_of_trays = number_of_trays
         self.number_of_unused_pixels = number_of_unused_pixels
         self.shape_list = shape_list
+        self.trays = trays
 
     def print_result(self):
         print("New neighbour => Number of trays: {},  Number of unused pixels: {}".format(self.number_of_trays,self.number_of_unused_pixels))
