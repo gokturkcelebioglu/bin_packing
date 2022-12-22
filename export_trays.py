@@ -11,12 +11,13 @@ def export_trays(trays, number_of_shapes):
     WHITE = (255,255,255)
 
     pygame.init()
+    pygame.display.iconify()
 
     def draw_square(leftF, topF, color):
         pygame.draw.rect(screen, color, pygame.Rect(leftF*PIXEL_SIZE, topF*PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE))
         pygame.draw.rect(screen, BLACK, pygame.Rect(leftF*PIXEL_SIZE, topF*PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE), 1)
 
-    font = pygame.font.SysFont('Consolas', 10)
+    font = pygame.font.SysFont('Consolas', int(PIXEL_SIZE/3))
     def draw_text(leftF, topF, id):
         screen.blit(font.render(str(id), True, WHITE), (leftF*PIXEL_SIZE + 5, topF*PIXEL_SIZE + 5))
 
@@ -35,7 +36,7 @@ def export_trays(trays, number_of_shapes):
                 left += 1
             top += 1
             left = 0
-        pygame.image.save(screen, str(export_counter) + '.png')
+        pygame.image.save(screen, str(export_counter + 1) + '.png')
         screen.fill((255, 255, 255))
         export_counter += 1
         top = 0
